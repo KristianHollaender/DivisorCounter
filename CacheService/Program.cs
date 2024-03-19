@@ -19,6 +19,9 @@ bool LoadBalancerConnector()
 
 var retryCount = 0;
 
+
+
+
 while(!LoadBalancerConnector() && retryCount < 3)
 {
     Thread.Sleep(2000);
