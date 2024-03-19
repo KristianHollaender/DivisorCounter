@@ -1,0 +1,42 @@
+﻿pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'C:\Users\Krist\Desktop\GitHub\DivisorCounter'
+            }
+        }
+
+        stage('Restore Dependencies') {
+            steps {
+                sh 'dotnet restore'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'dotnet build --configuration Release'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'dotnet test'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build successful!'
+
+            // Additional actions like sending emails or notifications here
+        }
+        failure {
+            echo 'Build failed!'
+
+            // Additional actions like sending emails or notifications here
+        }
+    }
+}
