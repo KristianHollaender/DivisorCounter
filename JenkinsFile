@@ -1,49 +1,23 @@
 pipeline {
     agent any
-
-    stages {
-        stage('Restore Dependencies') {
-            steps {
-                // Restore project dependencies
-                bat 'dotnet restore'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // Execute your build commands here
-                bat 'dotnet build --configuration Release'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                // Execute your test commands here
-                bat 'dotnet test'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Deployment steps (if applicable)
-                // Example: copying binaries to deployment directory
-                bat 'cp -r bin/Release/* /path/to/deployment/directory'
-            }
-        }
+    triggers {
+        pollSCM("* * * * *")
     }
-
-    post {
-        success {
-            // Notify on success (optional)
-            echo 'Build successful!'
-
-            // Additional actions like sending emails or notifications here
+    stages {
+        stage("Restore") {
+            steps {
+                bat "dotnet restore"
+            }
         }
-        failure {
-            // Notify on failure (optional)
-            echo 'Build failed!'
-
-            // Additional actions like sending emails or notifications here
+        stage("Build") {
+            steps {
+                bat "dotnet build"
+            }
+        }
+        stage("Successful message") {
+            steps {
+                echo "Successful build"
+            }
         }
     }
 }
