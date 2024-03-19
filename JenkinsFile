@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout your source code from GitHub
-                git 'https://github.com/KristianHollaender/DivisorCounter.git'
-            }
-        }
-
         stage('Restore Dependencies') {
             steps {
                 // Restore project dependencies
